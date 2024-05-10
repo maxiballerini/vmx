@@ -11,35 +11,35 @@ void inicializaTablaSegmentos(maquinaVirtual *MV,uint16_t codeS,uint16_t dataS,u
     MV->segmento[DS] = -1;
     MV->segmento[ES] = -1;
     MV->segmento[SS] = -1;
-    if(KS>0){
+    if(constS!=65535){
         MV->registro[KS]=pos<<16;
         MV->segmento[pos] = aux < 16;
         MV->segmento[pos] += dataS;
         aux+=constS;
         pos++;
     }
-    if(CS>0){
+    if(codeS!=65535){
         MV->registro[CS]=pos<<16;
         MV->segmento[pos] =  aux  < 16;
         MV->segmento[pos] += codeS;
         aux+=codeS;
         pos++;
     }
-    if(DS>0){
+    if(dataS!=65535){
         MV->registro[DS]=pos<<16;
         MV->segmento[pos] =  aux  < 16;
         MV->segmento[pos] += dataS;
         aux+=dataS;
         pos++;
     }
-    if(ES>0){
+    if(extraS!=65535){
         MV->registro[ES]=pos<<16;
         MV->segmento[pos] =  aux  < 16;
         MV->segmento[pos] += dataS;
         aux+=extraS;
         pos++;
     }
-    if(SS>0){
+    if(stackS!=65535){
         MV->registro[SS]=pos<<16;
         MV->segmento[pos] =  aux  < 16;
         MV->segmento[pos] += dataS;
@@ -65,19 +65,32 @@ void leeVersion1(maquinaVirtual *MV,FILE *arch,int tamanoMemoria){
     inicializaTablaSegmentos(MV,i,tamanoMemoria-i,0,0,0,tamanoMemoria);
     MV->registro[IP]=0;
 }
+void readInt2bytes(uint16_t *aaa,FILE *arch){
+    uint8_t aux;
+    uint16_t aux2;
+    fread(&aux, 1, 1, arch);
+    aux2=aux;
+    aux2=aux2<<8;
+    fread(&aux, 1, 1, arch);
+    aux2+=aux;
+    *aaa=aux2;
+}
 void leeVerision2VMX(maquinaVirtual *MV,FILE *arch,int tamanoMemoria){
     uint16_t codeS,dataS,extraS,stackS,constS;
+    uint8_t aux;
     int flag,offsetIP;
-    char aux;
-    fread(&codeS, 2, 1, arch);
-    fread(&dataS, 2, 1, arch);
-    fread(&extraS, 2, 1, arch);
-    fread(&stackS, 2, 1, arch);
-    fread(&constS, 2, 1, arch);
-    fread(&offsetIP, 2, 1, arch);
+    readInt2bytes(&codeS,arch);
+    readInt2bytes(&dataS,arch);
+    readInt2bytes(&extraS,arch);
+    readInt2bytes(&stackS,arch);
+    readInt2bytes(&constS,arch);
+    readInt2bytes(&offsetIP,arch);
     inicializaTablaSegmentos(MV,codeS,dataS,extraS,stackS,constS,tamanoMemoria);
     flag=constS + codeS;
-    for(int i=0;i<flag;i++){
+    for(int j=0;j<constS;i++){
+        fread(&(MV->memoria[i]),1,1,arch);
+    }
+    for(int i=codeS;i<flag;i++){
         fread(&(MV->memoria[i]),1,1,arch);
     }
     MV->registro[IP]=constS<<16;
@@ -118,12 +131,12 @@ void leeARG(int argc,char *argv[],int *tamanoMemoria,int *mostrarAssembler,char 
 }
 void leeARGforDebugger(int argc,char *argv[],int *tamanoMemoria,int *mostrarAssembler,char **nombreArchivoVMX,char **nombreArchivoVMI){
         *mostrarAssembler = 1;
-        *nombreArchivoVMX = malloc(strlen("prueba1") + 1);
-        strcpy(*nombreArchivoVMX,"prueba1");
+        *nombreArchivoVMX = malloc(strlen("prueba1.vmx") + 1);
+        strcpy(*nombreArchivoVMX,"prueba1.vmx");
 }
 int leeArch(maquinaVirtual *MV,int argc,char *argv[],int *mostrarAssembler){
     FILE *arch;
-    char identificador[5],*nombreArchivoVMX = NULL, *nombreArchivoVMI = NULL;
+    char identificador[5],*nombreArchivoVMX = NULL, *nombreArchivoVMI = NULL,buffer[6];
     int tamanoMemoria = 16,aux=0;
     uint8_t version;
     //leeARG(argc,argv,&tamanoMemoria,&mostrarAssembler,nombreArchivoVMX,nombreArchivoVMI);
@@ -138,8 +151,11 @@ int leeArch(maquinaVirtual *MV,int argc,char *argv[],int *mostrarAssembler){
     }
     if(arch){
         aux=1;
-        fread(identificador, 1, 5, arch);
+        fread(buffer, sizeof(char), sizeof(identificador), arch);
+        buffer[5]='\0';
+        printf("%s",buffer);
         fread(&version, 1, 1, arch);
+        printf("%u",version);
         if(version==1){
             leeVersion1(MV,arch,tamanoMemoria*1024);
         }
