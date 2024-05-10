@@ -11,38 +11,38 @@ void inicializaTablaSegmentos(maquinaVirtual *MV,uint16_t codeS,uint16_t dataS,u
     MV->segmento[DS] = -1;
     MV->segmento[ES] = -1;
     MV->segmento[SS] = -1;
-    if(constS!=65535){
+    if(constS>0){
         MV->registro[KS]=pos<<16;
-        MV->segmento[pos] = aux < 16;
-        MV->segmento[pos] += dataS;
+        MV->segmento[pos] = aux << 16;
+        MV->segmento[pos] += constS;
         aux+=constS;
         pos++;
     }
-    if(codeS!=65535){
+    if(codeS>0){
         MV->registro[CS]=pos<<16;
-        MV->segmento[pos] =  aux  < 16;
+        MV->segmento[pos] =  aux  << 16;
         MV->segmento[pos] += codeS;
         aux+=codeS;
         pos++;
     }
-    if(dataS!=65535){
+    if(dataS>0){
         MV->registro[DS]=pos<<16;
-        MV->segmento[pos] =  aux  < 16;
+        MV->segmento[pos] =  aux  << 16;
         MV->segmento[pos] += dataS;
         aux+=dataS;
         pos++;
     }
-    if(extraS!=65535){
+    if(extraS>0){
         MV->registro[ES]=pos<<16;
-        MV->segmento[pos] =  aux  < 16;
-        MV->segmento[pos] += dataS;
+        MV->segmento[pos] =  aux  << 16;
+        MV->segmento[pos] += extraS;
         aux+=extraS;
         pos++;
     }
-    if(stackS!=65535){
+    if(stackS>0){
         MV->registro[SS]=pos<<16;
-        MV->segmento[pos] =  aux  < 16;
-        MV->segmento[pos] += dataS;
+        MV->segmento[pos] =  aux  << 16;
+        MV->segmento[pos] += stackS;
         aux+=stackS;
         pos++;
     }
@@ -76,9 +76,10 @@ void readInt2bytes(uint16_t *aaa,FILE *arch){
     *aaa=aux2;
 }
 void leeVerision2VMX(maquinaVirtual *MV,FILE *arch,int tamanoMemoria){
-    uint16_t codeS,dataS,extraS,stackS,constS;
+    uint16_t codeS,dataS,extraS,stackS,constS,offsetIP;
+    int i;
     uint8_t aux;
-    int flag,offsetIP;
+    int flag;
     readInt2bytes(&codeS,arch);
     readInt2bytes(&dataS,arch);
     readInt2bytes(&extraS,arch);
@@ -87,11 +88,13 @@ void leeVerision2VMX(maquinaVirtual *MV,FILE *arch,int tamanoMemoria){
     readInt2bytes(&offsetIP,arch);
     inicializaTablaSegmentos(MV,codeS,dataS,extraS,stackS,constS,tamanoMemoria);
     flag=constS + codeS;
-    for(int j=0;j<constS;i++){
-        fread(&(MV->memoria[i]),1,1,arch);
+    i=MV->segmento[(MV->registro[CS])>>16]>>16;
+    for(int j=0;j<codeS;j++){
+        fread(&(MV->memoria[i+j]),1,1,arch);
     }
-    for(int i=codeS;i<flag;i++){
-        fread(&(MV->memoria[i]),1,1,arch);
+    i=MV->segmento[(MV->registro[KS])>>16]>>16;
+    for(int j=0;j<constS;j++){
+        fread(&(MV->memoria[i+j]),1,1,arch);
     }
     MV->registro[IP]=constS<<16;
     MV->registro[IP]+=offsetIP;

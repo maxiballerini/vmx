@@ -37,7 +37,7 @@
 1715309867 d:\vmx\fncarch.h
 	"componentes.h"
 
-1715309867 source:d:\vmx\disassembler.c
+1715382041 source:d:\vmx\disassembler.c
 	"componentes.h"
 	<stdio.h>
 	<stdlib.h>
@@ -56,7 +56,7 @@
 
 1715309867 d:\vmx\instrucciones.h
 
-1715361808 source:d:\vmx\fncarch.c
+1715376867 source:d:\vmx\fncarch.c
 	"componentes.h"
 	<stdint.h>
 	<stdio.h>
