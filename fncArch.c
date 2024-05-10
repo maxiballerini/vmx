@@ -120,7 +120,6 @@ void leeARGforDebugger(int argc,char *argv[],int *tamanoMemoria,int *mostrarAsse
         *mostrarAssembler = 1;
         *nombreArchivoVMX = malloc(strlen("prueba1") + 1);
         strcpy(*nombreArchivoVMX,"prueba1");
-        printf("%s \n",*nombreArchivoVMX);
 }
 int leeArch(maquinaVirtual *MV,int argc,char *argv[],int *mostrarAssembler){
     FILE *arch;
