@@ -18,7 +18,7 @@
 1715306692 d:\vmx\vmx\fncarch.h
 	"componentes.h"
 
-1715306692 source:d:\vmx\main.c
+1715309867 source:d:\vmx\main.c
 	<stdio.h>
 	<stdlib.h>
 	"disassembler.h"
@@ -26,14 +26,56 @@
 	"ejecucion.h"
 	"fncArch.h"
 
-1715306692 d:\vmx\disassembler.h
+1715309867 d:\vmx\disassembler.h
 	"componentes.h"
 
-1715306692 d:\vmx\componentes.h
+1715309867 d:\vmx\componentes.h
 
-1715306692 d:\vmx\ejecucion.h
+1715309867 d:\vmx\ejecucion.h
 	"componentes.h"
 
-1715306692 d:\vmx\fncarch.h
+1715309867 d:\vmx\fncarch.h
 	"componentes.h"
+
+1715309867 source:d:\vmx\disassembler.c
+	"componentes.h"
+	<stdio.h>
+	<stdlib.h>
+	"const.h"
+
+1715309867 d:\vmx\const.h
+
+1715309867 source:d:\vmx\ejecucion.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<stdint.h>
+	"componentes.h"
+	"instrucciones.h"
+	"const.h"
+
+1715309867 d:\vmx\instrucciones.h
+
+1715309867 source:d:\vmx\fncarch.c
+	"componentes.h"
+	<stdint.h>
+	<stdio.h>
+	<stdlib.h>
+	"string.h"
+	"const.h"
+
+1715309867 source:d:\vmx\funciones.c
+	"componentes.h"
+	"const.h"
+
+1715309867 source:d:\vmx\instrucciones.c
+	<string.h>
+	<stdlib.h>
+	<stdio.h>
+	<time.h>
+	"funciones.h"
+
+1715309867 d:\vmx\funciones.h
+	"componentes.h"
+	"const.h"
 
