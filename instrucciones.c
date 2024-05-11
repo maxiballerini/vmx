@@ -6,8 +6,9 @@
 //2 operandos
 void MOV(maquinaVirtual*MV,int opA,int opB,char tipoA,char tipoB){
     int datoB = obtieneOP(MV,opB,tipoB);
-    if(tipoA==3)
-        escribememoria(MV,4,obtienePunteroMemoria(MV,opA),datoB);
+    if(tipoA==3){
+        escribememoria(MV,cantMemoria(opA),obtienePunteroMemoria(MV,opA),datoB);
+    }
     else
         escriberegistro(MV,opA,datoB);
 }

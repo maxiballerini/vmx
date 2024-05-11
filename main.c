@@ -17,6 +17,6 @@ int main(int argc,char *argv[]){
     }
     else
         printf("el archivo no se pudo abrir");
-    printf("%c %c %c",MV.memoria[10],MV.memoria[11],MV.memoria[12]);
+    printf("%d \n%d \n%d \n",MV.memoria[40],MV.memoria[41],MV.memoria[43]);
     return 0;
 }
