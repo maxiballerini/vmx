@@ -78,8 +78,6 @@ void readInt2bytes(uint16_t *aaa,FILE *arch){
 void leeVerision2VMX(maquinaVirtual *MV,FILE *arch,int tamanoMemoria){
     uint16_t codeS,dataS,extraS,stackS,constS,offsetIP;
     int i;
-    uint8_t aux;
-    int flag;
     readInt2bytes(&codeS,arch);
     readInt2bytes(&dataS,arch);
     readInt2bytes(&extraS,arch);
@@ -87,7 +85,6 @@ void leeVerision2VMX(maquinaVirtual *MV,FILE *arch,int tamanoMemoria){
     readInt2bytes(&constS,arch);
     readInt2bytes(&offsetIP,arch);
     inicializaTablaSegmentos(MV,codeS,dataS,extraS,stackS,constS,tamanoMemoria);
-    flag=constS + codeS;
     i=MV->segmento[(MV->registro[CS])>>16]>>16;
     for(int j=0;j<codeS;j++){
         fread(&(MV->memoria[i+j]),1,1,arch);
@@ -103,7 +100,7 @@ void leeVerision2VMI(maquinaVirtual *MV,FILE *arch,int tamanoMemoria){
     uint16_t tamanoMemoriaP;
     int flag ;
     int i;
-    fread(&tamanoMemoriaP,1,2,arch);
+    readInt2bytes(&tamanoMemoriaP,arch);
     for(i=0;i<16;i++){
         fread(&(MV->registro[i]),4,1,arch);
     }

@@ -16,7 +16,7 @@ void ejecutadisasssembler(maquinaVirtual MV){
     char *RegX[16]={"CS","DS"," "," "," ","IP"," "," ","CC","AC","AX","BX","CX","DX","EX","FX"};
     char mascara0Operando= 0xFF,mascara2Operando= 0x10;
     flag = ( MV.segmento[((MV.registro[CS] >>16)&0x0000FFFF)] & 0x0000FFFF ) + ( MV.segmento[((MV.registro[KS] >>16)&0x0000FFFF)] & 0x0000FFFF );
-    entrypoint=((MV.segmento[MV.registro[IP]>>16])>>16 )+ (MV.registro[IP] & 0x0000FFFF);
+    entrypoint=((MV.registro[IP]>>16)&0x0000FFFF)+ (MV.registro[IP] & 0x0000FFFF);
     flagKS=MV.segmento[MV.registro[KS]>>16]&0x0000FFFF;
     for(i=0;i<flagKS;i++){
         printf("[%04X] ",i);
