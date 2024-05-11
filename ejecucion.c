@@ -17,15 +17,14 @@ void ejecutaInstrucciones(maquinaVirtual *MV){
     bottom=(MV->segmento[MV->registro[CS]>>16]>>16)&0x0000FFFF;
     top=bottom+(MV->segmento[MV->registro[CS]>>16]&0x0000FFFF)-1;
     do{
-       // printf("se ejecuto la linea %04X\n",MV.registro[IP]);
-        auxIP = ((MV->registro[IP]>>16)& 0x0000FFFF ) + (MV->registro[IP]&0x0000FFFF);
+        auxIP = (MV->segmento[((MV->registro[IP]>>16)& 0x0000FFFF )]>>16) + (MV->registro[IP]&0x0000FFFF);
         aux=MV->memoria[auxIP];
         MV->registro[IP]++;
         opB=0;
         opA=0;
         operandoB= (int)((( aux ^ 0b11000000 ) & 0b11000000) >> 6);
         for(i=0;i<operandoB;i++){
-            auxIP = ((MV->registro[IP]>>16)& 0x0000FFFF ) + (MV->registro[IP]&0x0000FFFF);
+            auxIP = (MV->segmento[((MV->registro[IP]>>16)& 0x0000FFFF )]>>16) + (MV->registro[IP]&0x0000FFFF);
             opB = opB << 8 | (MV->memoria[auxIP] & 0x000000FF);
             MV->registro[IP]++;
         }
@@ -33,7 +32,7 @@ void ejecutaInstrucciones(maquinaVirtual *MV){
         if((aux & mascara2Operando) == 0){
             operandoA= (int)((( aux ^ 0b00110000 ) & 0b00110000) >> 4);
             for(i=0;i<operandoA;i++){
-                auxIP = ((MV->registro[IP]>>16)& 0x0000FFFF ) + (MV->registro[IP]&0x0000FFFF);
+                auxIP = (MV->segmento[((MV->registro[IP]>>16)& 0x0000FFFF )]>>16) + (MV->registro[IP]&0x0000FFFF);
                 opA = opA << 8 | (MV->memoria[auxIP] & 0x000000FF) ;
                 MV->registro[IP]++;
             }

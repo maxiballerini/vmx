@@ -23,6 +23,7 @@ void inicializaTablaSegmentos(maquinaVirtual *MV,uint16_t codeS,uint16_t dataS,u
         MV->segmento[pos] =  aux  << 16;
         MV->segmento[pos] += codeS;
         aux+=codeS;
+        MV->registro[IP]=pos<<16;
         pos++;
     }
     if(dataS>0){
@@ -93,7 +94,6 @@ void leeVerision2VMX(maquinaVirtual *MV,FILE *arch,int tamanoMemoria){
     for(int j=0;j<constS;j++){
         fread(&(MV->memoria[i+j]),1,1,arch);
     }
-    MV->registro[IP]=constS<<16;
     MV->registro[IP]+=offsetIP;
 }
 void leeVerision2VMI(maquinaVirtual *MV,FILE *arch,int tamanoMemoria){
