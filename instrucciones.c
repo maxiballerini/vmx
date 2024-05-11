@@ -367,7 +367,14 @@ void NOT (maquinaVirtual *MV,int opA,int tipoA){
     }
 }
 void PUSH (maquinaVirtual *MV,int opA,int tipoA){
-
+    int dato;
+    MV->registro[SP]-=4;
+    if( MV->registro[SP]< MV->registro[SS]){
+        printf("STACK OVERFLOW\n");
+        exit(0);
+    }
+    dato=obtieneOP(MV,opA,tipoA);
+    escribePila(MV,dato);
 }
 void POP (maquinaVirtual *MV,int opA,int tipoA){
 

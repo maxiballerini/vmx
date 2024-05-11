@@ -119,3 +119,6 @@ int obtieneOP(maquinaVirtual *MV,int OP,int tipoOP){
         return OP;
     }
 }
+void ecribePila(maquinaVirtual *MV,int dato){
+
+}
