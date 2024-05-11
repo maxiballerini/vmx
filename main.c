@@ -13,7 +13,7 @@ int main(int argc,char *argv[]){
             ejecutadisasssembler(MV);
         }
         printf("\n---------------------------------------------------------------------\n");
-        ejecutaInstrucciones(MV);
+        ejecutaInstrucciones(&MV);
     }
     else
         printf("el archivo no se pudo abrir");

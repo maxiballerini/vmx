@@ -302,7 +302,7 @@ void SYS (maquinaVirtual *MV,int opA,char tipoA){
 }
 void JMP (maquinaVirtual *MV,int opA,char tipoA){
     int dato = obtieneOP(MV,opA,tipoA);
-    MV->registro[IP]=dato;
+    MV->registro[IP]=(MV->registro[IP]&0x0000FFFF) | dato;
 }
 void JZ (maquinaVirtual *MV,int opA,int tipoA) {
     if(MV->registro[CC]  == 1 ){

@@ -14,8 +14,8 @@ int cantMemoria(int opA){
     return (~((opA)>>22) & 0x00000003)+1;
 }
 void AnalizaSegmento(maquinaVirtual *MV,int posicion,int cant,int seg){
-    int top,bottom,indice,aux;
-    indice =(MV->registro[seg]>>16) & 0x0000FFFF;
+    int top,bottom,indice;
+     indice =(MV->registro[seg]>>16) & 0x0000FFFF;
     bottom=(MV->segmento[indice]>>16) & 0x0000FFFF;
     top = bottom + (MV->segmento[indice] & 0x0000FFFF);
 
