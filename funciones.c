@@ -10,9 +10,9 @@ int extiendenegativo(int i,int cant){
         return (i | 0xFFFF0000);
     }
 }
-    int cantMemoria(int opA){
-        return (~((opA)>>22) & 0x00000003)+1;
-    }
+int cantMemoria(int opA){
+    return (~((opA)>>22) & 0x00000003)+1;
+}
 void AnalizaSegmento(maquinaVirtual *MV,int posicion,int cant,int seg){
     int top,bottom,indice,aux;
     indice =(MV->registro[seg]>>16) & 0x0000FFFF;
