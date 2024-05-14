@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <time.h>
 #include "funciones.h"
+#include "ejecucion.h"
 //2 operandos
 void MOV(maquinaVirtual*MV,int opA,int opB,char tipoA,char tipoB){
     int datoB = obtieneOP(MV,opB,tipoB);
@@ -220,13 +221,67 @@ void RND(maquinaVirtual *MV, int opA, int opB, char tipoA, char tipoB) {
 
 
 //CORREGIR READ Y WRITE
-void readS(){
+void readS(maquinaVirtual *MV){
+    int cant ,pos;
+    char aux;
+    cant = MV->registro[ECX]&0x0000FFFF;
+    pos=obtienePunteroMemoria(MV,0x000D0000);
+    if (cant==-1){
+        fscanf("%c",&aux);
+        while(aux!='\0'){
+            MV->memoria[pos++]=aux;
+        }
+    }
+    else{
+        for(int i=0;i<cant;i++){
+            fscanf("%c",aux);
+            MV->memoria[pos+i]=aux;
+        }
+    }
 }
-void writeS(){
+void writeS(maquinaVirtual *MV){
+    char aux;
+    int pos=obtienePunteroMemoria(MV,0x000D0000);
+    while(aux!='\0'){
+        fprintf("%c",MV->memoria[pos++]);
+    }
 }
 void clear(){
+    system("cls");
 }
-void breakpoint(){
+void breakpoint(maquinaVirtual *MV,char *VMI){
+    FILE *arch;
+    char caracter;
+    if (VMI!=NULL){
+        arch = fopen(VMI,"wb");
+        if(arch){
+            char caracter;
+            printf("Presiona 'q' 'g' o enter \n");
+            while (1) {
+                fwrite("VMI24188",1,8,arch);
+                fwrite(MV->registro,sizeof(MV->registro),1,arch);
+                fwrite(MV->segmento,sizeof(MV->segmento),1,arch);
+                fwrite(MV->memoria,sizeof(MV->memoria),1,arch);
+                fscanf("%c",&caracter);
+
+                if (caracter == 'q') {
+                    fclose(arch);
+                    exit(0);
+                } else if (caracter == 'g') {
+                    fclose(arch);
+                    return;
+                } else if (caracter == '\n') {
+                    STEP(MV,VMI);
+                }
+                else{
+                    printf("caracter invalido");
+                    exit(1);
+                }
+            }
+        }
+        else
+            printf("el archivo no se pudo abrir");
+    }
 }
 void read(maquinaVirtual *MV){
     int formato=MV->registro[10]&0x000000FF;
@@ -303,14 +358,20 @@ void write(maquinaVirtual *MV){
     }
 }
 //1 opereando
-void SYS (maquinaVirtual *MV,int opA,char tipoA){
-    FuncPtr0 funcionesSYS[14] = {read,write,readS,writeS,read,read,clear,read,read,read,read,read,read,breakpoint};
+void SYS (maquinaVirtual *MV,int opA,char tipoA,char *VMI){
+    FuncPtr0 funcionesSYS[4] = {read,write,readS,writeS};
     int indice = obtieneOP(MV,opA,tipoA);
-    funcionesSYS[indice - 1](MV);
+    if (indice>=7)
+        if(indice==15)
+            breakpoint(MV,VMI);
+        else
+            clear();
+    else
+        funcionesSYS[indice - 1](MV);
 }
 void JMP (maquinaVirtual *MV,int opA,char tipoA){
     int dato = obtieneOP(MV,opA,tipoA);
-    MV->registro[IP]=(MV->registro[IP]&0x0000FFFF) | dato;
+    MV->registro[IP]=(MV->registro[IP]&0xFFFF0000) | dato;
 }
 void JZ (maquinaVirtual *MV,int opA,int tipoA) {
     if(MV->registro[CC]  == 1 ){
@@ -389,6 +450,8 @@ void POP (maquinaVirtual *MV,int opA,int tipoA){
         escriberegistro(MV,opA,dato);
 }
 void CALL (maquinaVirtual *MV,int opA,int tipoA){
+    PUSH(MV,IP,1);
+    JMP(MV,opA,tipoA);
 
 }
 //0 operandos
@@ -396,5 +459,5 @@ void STOP (maquinaVirtual *MV){
     exit(0);
 }
 void RET (maquinaVirtual *MV){
-
+    POP(MV,IP,1);
 }

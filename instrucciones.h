@@ -15,7 +15,7 @@ void XOR (maquinaVirtual *MV,int,int,char,char);
 void RND (maquinaVirtual *MV,int,int,char,char);
 
 //1 opereando
-void SYS (maquinaVirtual *MV,int,char);
+void SYS (maquinaVirtual *MV,int,char,char *);
 void JMP (maquinaVirtual *MV,int,char);
 void JZ (maquinaVirtual *MV,int,char);
 void JP (maquinaVirtual *MV,int,char);

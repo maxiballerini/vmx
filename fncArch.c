@@ -134,9 +134,10 @@ void leeARG(int argc,char *argv[],int *tamanoMemoria,int *mostrarAssembler,char 
 void leeARGforDebugger(int argc,char *argv[],int *tamanoMemoria,int *mostrarAssembler,char **nombreArchivoVMX,char **nombreArchivoVMI){
         *mostrarAssembler = 1;
         *nombreArchivoVMX = malloc(strlen("prueba1.vmx") + 1);
+        strcpy(*nombreArchivoVMI,"prueba1.vmi");
         strcpy(*nombreArchivoVMX,"prueba1.vmx");
 }
-int leeArch(maquinaVirtual *MV,int argc,char *argv[],int *mostrarAssembler){
+int leeArch(maquinaVirtual *MV,int argc,char *argv[],int *mostrarAssembler,char **VMI){
     FILE *arch;
     char identificador[5],*nombreArchivoVMX = NULL, *nombreArchivoVMI = NULL,buffer[6];
     int tamanoMemoria = 16,aux=0;
@@ -150,6 +151,9 @@ int leeArch(maquinaVirtual *MV,int argc,char *argv[],int *mostrarAssembler){
     else{
         arch = fopen(nombreArchivoVMI,"rb");
         aux=1;
+    }
+    if(nombreArchivoVMI!=NULL){
+        *VMI=nombreArchivoVMI;
     }
     if(arch){
         aux=1;
