@@ -45,7 +45,7 @@
 
 1715421475 d:\vmx\const.h
 
-1715467689 source:d:\vmx\ejecucion.c
+1715468606 source:d:\vmx\ejecucion.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
@@ -56,7 +56,7 @@
 
 1715421475 d:\vmx\instrucciones.h
 
-1715468385 source:d:\vmx\fncarch.c
+1715644994 source:d:\vmx\fncarch.c
 	"componentes.h"
 	<stdint.h>
 	<stdio.h>
@@ -64,20 +64,20 @@
 	"string.h"
 	"const.h"
 
-1715467741 source:d:\vmx\funciones.c
+1715646699 source:d:\vmx\funciones.c
 	"componentes.h"
 	"const.h"
 	"stdlib.h"
 	"stdio.h"
 
-1715467384 source:d:\vmx\instrucciones.c
+1715646688 source:d:\vmx\instrucciones.c
 	<string.h>
 	<stdlib.h>
 	<stdio.h>
 	<time.h>
 	"funciones.h"
 
-1715421475 d:\vmx\funciones.h
+1715644668 d:\vmx\funciones.h
 	"componentes.h"
 	"const.h"
 

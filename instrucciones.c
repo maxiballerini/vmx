@@ -220,6 +220,14 @@ void RND(maquinaVirtual *MV, int opA, int opB, char tipoA, char tipoB) {
 
 
 //CORREGIR READ Y WRITE
+void readS(){
+}
+void writeS(){
+}
+void clear(){
+}
+void breakpoint(){
+}
 void read(maquinaVirtual *MV){
     int formato=MV->registro[10]&0x000000FF;
     int CH=(MV->registro[12]&0x0000FF00)>>8;
@@ -296,7 +304,7 @@ void write(maquinaVirtual *MV){
 }
 //1 opereando
 void SYS (maquinaVirtual *MV,int opA,char tipoA){
-    FuncPtr0 funcionesSYS[2] = {read,write};
+    FuncPtr0 funcionesSYS[14] = {read,write,readS,writeS,read,read,clear,read,read,read,read,read,read,breakpoint};
     int indice = obtieneOP(MV,opA,tipoA);
     funcionesSYS[indice - 1](MV);
 }
@@ -368,16 +376,17 @@ void NOT (maquinaVirtual *MV,int opA,int tipoA){
 }
 void PUSH (maquinaVirtual *MV,int opA,int tipoA){
     int dato;
-    MV->registro[SP]-=4;
-    if( MV->registro[SP]< MV->registro[SS]){
-        printf("STACK OVERFLOW\n");
-        exit(0);
-    }
     dato=obtieneOP(MV,opA,tipoA);
     escribePila(MV,dato);
 }
 void POP (maquinaVirtual *MV,int opA,int tipoA){
-
+    int dato;
+    dato = leePila(MV);
+     if(tipoA==3){
+        escribememoria(MV,cantMemoria(opA),obtienePunteroMemoria(MV,opA),dato);
+    }
+    else
+        escriberegistro(MV,opA,dato);
 }
 void CALL (maquinaVirtual *MV,int opA,int tipoA){
 
@@ -387,5 +396,5 @@ void STOP (maquinaVirtual *MV){
     exit(0);
 }
 void RET (maquinaVirtual *MV){
-    exit(0);
+
 }

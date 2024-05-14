@@ -45,6 +45,8 @@ void inicializaTablaSegmentos(maquinaVirtual *MV,uint16_t codeS,uint16_t dataS,u
         MV->segmento[pos] =  aux  << 16;
         MV->segmento[pos] += stackS;
         aux+=stackS;
+        MV->registro[SP]=(MV->segmento[pos] >> 16) +stackS;
+
         pos++;
     }
 
