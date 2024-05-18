@@ -52,7 +52,7 @@ void SWAP(maquinaVirtual *MV, int opA, int opB, char tipoA, char tipoB) {
     int datoB = obtieneOP(MV,opB,tipoB);
     int datoA = obtieneOP(MV,opA,tipoA);
     if(tipoA==3){
-        escribememoria(MV,cantMemoria(opA),obtienePunteroMemoria(MV,opA),datoB);
+        escribememoria(MV,cantMemoria(opB),obtienePunteroMemoria(MV,opA),datoB);
         escribememoria(MV,cantMemoria(opA),obtienePunteroMemoria(MV,opB),datoA);
     }
     else{
@@ -82,7 +82,8 @@ void DIV(maquinaVirtual *MV, int opA, int opB, char tipoA, char tipoB) {
     int datoB = obtieneOP(MV,opB,tipoB);
     int datoA = obtieneOP(MV,opA,tipoA);
     if (datoB == 0) {
-        printf("Error: División por cero.\n");
+        printf("Error: Division por cero.\n");
+        printf("en linea %04X",MV->registro[IP]&0x0000FFFF);
         exit(0);
     }
 
@@ -222,28 +223,18 @@ void RND(maquinaVirtual *MV, int opA, int opB, char tipoA, char tipoB) {
 
 //CORREGIR READ Y WRITE
 void readS(maquinaVirtual *MV){
-    int cant ,pos;
-    char aux;
-    cant = MV->registro[ECX]&0x0000FFFF;
+    int pos;
+    char aux[50];
     pos=obtienePunteroMemoria(MV,0x000D0000);
-    if (cant==-1){
-        fscanf("%c",&aux);
-        while(aux!='\0'){
-            MV->memoria[pos++]=aux;
-        }
-    }
-    else{
-        for(int i=0;i<cant;i++){
-            fscanf("%c",aux);
-            MV->memoria[pos+i]=aux;
-        }
+    scanf("%s",aux);
+    for(int i =0;i<sizeof(aux);i++){
+        MV->memoria[pos+i]=aux[i];
     }
 }
 void writeS(maquinaVirtual *MV){
-    char aux;
     int pos=obtienePunteroMemoria(MV,0x000D0000);
-    while(aux!='\0'){
-        fprintf("%c",MV->memoria[pos++]);
+    while(MV->memoria[pos]!='\0'){
+        printf("%c",MV->memoria[pos++]);
     }
 }
 void clear(){
@@ -251,7 +242,6 @@ void clear(){
 }
 void breakpoint(maquinaVirtual *MV,char *VMI){
     FILE *arch;
-    char caracter;
     if (VMI!=NULL){
         arch = fopen(VMI,"wb");
         if(arch){
@@ -262,7 +252,7 @@ void breakpoint(maquinaVirtual *MV,char *VMI){
                 fwrite(MV->registro,sizeof(MV->registro),1,arch);
                 fwrite(MV->segmento,sizeof(MV->segmento),1,arch);
                 fwrite(MV->memoria,sizeof(MV->memoria),1,arch);
-                fscanf("%c",&caracter);
+                scanf("%c",&caracter);
 
                 if (caracter == 'q') {
                     fclose(arch);
@@ -271,7 +261,7 @@ void breakpoint(maquinaVirtual *MV,char *VMI){
                     fclose(arch);
                     return;
                 } else if (caracter == '\n') {
-                    STEP(MV,VMI);
+                 //   STEP(MV,VMI);
                 }
                 else{
                     printf("caracter invalido");
@@ -371,7 +361,7 @@ void SYS (maquinaVirtual *MV,int opA,char tipoA,char *VMI){
 }
 void JMP (maquinaVirtual *MV,int opA,char tipoA){
     int dato = obtieneOP(MV,opA,tipoA);
-    MV->registro[IP]=(MV->registro[IP]&0xFFFF0000) | dato;
+    MV->registro[IP]=(MV->registro[IP]&0xFFFF0000) | (dato&0x0000FFFF);
 }
 void JZ (maquinaVirtual *MV,int opA,int tipoA) {
     if(MV->registro[CC]  == 1 ){

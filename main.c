@@ -8,7 +8,6 @@ int main(int argc,char *argv[]){
     maquinaVirtual MV;
     int  mostrarAssembler = 0;
     char *VMI=NULL;
-
     if(leeArch(&MV,argc,argv,&mostrarAssembler,&VMI)){
         if(mostrarAssembler){
             printf("ejecutando dissasembler\n");
@@ -19,6 +18,5 @@ int main(int argc,char *argv[]){
     }
     else
         printf("el archivo no se pudo abrir");
-    printf("%d \n%d \n%d \n",MV.memoria[40],MV.memoria[41],MV.memoria[43]);
     return 0;
 }

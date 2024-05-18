@@ -81,3 +81,67 @@
 	"componentes.h"
 	"const.h"
 
+1715980201 source:c:\users\maxib\onedrive\documentos\github\vmx\disassembler.c
+	"componentes.h"
+	<stdio.h>
+	<stdlib.h>
+	"const.h"
+
+1715962638 c:\users\maxib\onedrive\documentos\github\vmx\componentes.h
+
+1715962638 c:\users\maxib\onedrive\documentos\github\vmx\const.h
+
+1715998040 source:c:\users\maxib\onedrive\documentos\github\vmx\ejecucion.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<stdint.h>
+	"componentes.h"
+	"instrucciones.h"
+	"const.h"
+
+1715962638 c:\users\maxib\onedrive\documentos\github\vmx\instrucciones.h
+
+1715989782 source:c:\users\maxib\onedrive\documentos\github\vmx\fncarch.c
+	"componentes.h"
+	<stdint.h>
+	<stdio.h>
+	<stdlib.h>
+	"string.h"
+	"const.h"
+
+1715994078 source:c:\users\maxib\onedrive\documentos\github\vmx\funciones.c
+	"componentes.h"
+	"const.h"
+	"stdlib.h"
+	"stdio.h"
+
+1715998069 source:c:\users\maxib\onedrive\documentos\github\vmx\instrucciones.c
+	<string.h>
+	<stdlib.h>
+	<stdio.h>
+	<time.h>
+	"funciones.h"
+	"ejecucion.h"
+
+1715962638 c:\users\maxib\onedrive\documentos\github\vmx\funciones.h
+	"componentes.h"
+	"const.h"
+
+1715962638 c:\users\maxib\onedrive\documentos\github\vmx\ejecucion.h
+	"componentes.h"
+
+1715994232 source:c:\users\maxib\onedrive\documentos\github\vmx\main.c
+	<stdio.h>
+	<stdlib.h>
+	"disassembler.h"
+	"componentes.h"
+	"ejecucion.h"
+	"fncArch.h"
+
+1715962638 c:\users\maxib\onedrive\documentos\github\vmx\disassembler.h
+	"componentes.h"
+
+1715962638 c:\users\maxib\onedrive\documentos\github\vmx\fncarch.h
+	"componentes.h"
+

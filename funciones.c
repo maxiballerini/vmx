@@ -102,10 +102,9 @@ void escriberegistro(maquinaVirtual *MV,int Reg,int dato){
     }
 }
 int obtieneOP(maquinaVirtual *MV,int OP,int tipoOP){
-    int secReg,codReg,cantMemoria;
+    int secReg,codReg;
     if(tipoOP==3){
-        cantMemoria = (((OP&0xC0000000)>>22) & 0x00000003)+1;
-        return leememoria(MV,cantMemoria,obtienePunteroMemoria(MV,OP));
+        return leememoria(MV,cantMemoria(OP),obtienePunteroMemoria(MV,OP));
     }
     else if(tipoOP==1){
         secReg=(OP&0x000000F0)>>4;

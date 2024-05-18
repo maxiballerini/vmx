@@ -15,19 +15,22 @@ void ejecutadisasssembler(maquinaVirtual MV){
     char *RegLow[16]={"CS","DS"," "," "," ","IP"," "," ","CC","AC","AL","BL","CL","DL","EL","FL"};
     char *RegX[16]={"CS","DS"," "," "," ","IP"," "," ","CC","AC","AX","BX","CX","DX","EX","FX"};
     char mascara0Operando= 0xFF,mascara2Operando= 0x10;
-    flag = ( MV.segmento[((MV.registro[CS] >>16)&0x0000FFFF)] & 0x0000FFFF ) + ( MV.segmento[((MV.registro[KS] >>16)&0x0000FFFF)] & 0x0000FFFF );
+    flag = ( MV.segmento[((MV.registro[CS] >>16)&0x0000FFFF)] & 0x0000FFFF );
     entrypoint=((MV.segmento[MV.registro[IP]>>16])>>16 )+ (MV.registro[IP] & 0x0000FFFF);
-    flagKS=MV.segmento[MV.registro[KS]>>16]&0x0000FFFF;
-    for(i=0;i<flagKS;i++){
-        printf("[%04X] ",i);
-        j=0;
-        do{
-            aux=MV.memoria[i++];
-            auxcadena[j]=aux;
-            j++;
-        }while(aux!='\0');
-        i--;
-        printf("%s \n",auxcadena);
+    if(MV.registro[KS]!=-1){
+        flagKS=MV.segmento[MV.registro[KS]>>16]&0x0000FFFF;
+        flag+= ( MV.segmento[((MV.registro[KS] >>16)&0x0000FFFF)] & 0x0000FFFF );
+        for(i=0;i<flagKS;i++){
+            printf("[%04X] ",i);
+            j=0;
+            do{
+                aux=MV.memoria[i++];
+                auxcadena[j]=aux;
+                j++;
+            }while(aux!='\0');
+            i--;
+            printf("%s \n",auxcadena);
+        }
     }
     while( i< flag ){
         aux=MV.memoria[i];

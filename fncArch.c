@@ -4,13 +4,16 @@
 #include <stdlib.h>
 #include "string.h"
 #include "const.h"
+void inicializatablasegmentos1(maquinaVirtual *MV){
+
+}
 void inicializaTablaSegmentos(maquinaVirtual *MV,uint16_t codeS,uint16_t dataS,uint16_t extraS,uint16_t stackS,uint16_t constS,int tamanoMemoria){
     int aux=0,pos=0;
-    MV->segmento[KS] = -1;
-    MV->segmento[CS] = -1;
-    MV->segmento[DS] = -1;
-    MV->segmento[ES] = -1;
-    MV->segmento[SS] = -1;
+    MV->registro[KS] = -1;
+    MV->registro[CS] = -1;
+    MV->registro[DS] = -1;
+    MV->registro[ES] = -1;
+    MV->registro[SS] = -1;
     if(constS>0){
         MV->registro[KS]=pos<<16;
         MV->segmento[pos] = aux << 16;
@@ -59,12 +62,15 @@ void inicializaTablaSegmentos(maquinaVirtual *MV,uint16_t codeS,uint16_t dataS,u
 void leeVersion1(maquinaVirtual *MV,FILE *arch,int tamanoMemoria){
     char aux;
     int i=0;
+    fread(&aux,1,1,arch);
+    fread(&aux,1,1,arch);
     while(!feof(arch)){
         fread(&aux,1,1,arch);
         MV->memoria[i]=aux;
         i++;
     }
     i--;
+    printf("%d",i);
     inicializaTablaSegmentos(MV,i,tamanoMemoria-i,0,0,0,tamanoMemoria);
     MV->registro[IP]=0;
 }
@@ -97,6 +103,7 @@ void leeVerision2VMX(maquinaVirtual *MV,FILE *arch,int tamanoMemoria){
         fread(&(MV->memoria[i+j]),1,1,arch);
     }
     MV->registro[IP]+=offsetIP;
+
 }
 void leeVerision2VMI(maquinaVirtual *MV,FILE *arch,int tamanoMemoria){
     uint16_t tamanoMemoriaP;
@@ -133,9 +140,10 @@ void leeARG(int argc,char *argv[],int *tamanoMemoria,int *mostrarAssembler,char 
 }
 void leeARGforDebugger(int argc,char *argv[],int *tamanoMemoria,int *mostrarAssembler,char **nombreArchivoVMX,char **nombreArchivoVMI){
         *mostrarAssembler = 1;
-        *nombreArchivoVMX = malloc(strlen("prueba1.vmx") + 1);
-        strcpy(*nombreArchivoVMI,"prueba1.vmi");
-        strcpy(*nombreArchivoVMX,"prueba1.vmx");
+        *nombreArchivoVMX = malloc(strlen("sample1aux.vmx") + 1);
+        *nombreArchivoVMI = malloc(strlen("sample1.vmi") + 1);
+        strcpy(*nombreArchivoVMI,"sample1.vmi");
+        strcpy(*nombreArchivoVMX,"sample1aux.vmx");
 }
 int leeArch(maquinaVirtual *MV,int argc,char *argv[],int *mostrarAssembler,char **VMI){
     FILE *arch;
@@ -159,9 +167,7 @@ int leeArch(maquinaVirtual *MV,int argc,char *argv[],int *mostrarAssembler,char 
         aux=1;
         fread(buffer, sizeof(char), sizeof(identificador), arch);
         buffer[5]='\0';
-        printf("%s",buffer);
         fread(&version, 1, 1, arch);
-        printf("%u",version);
         if(version==1){
             leeVersion1(MV,arch,tamanoMemoria*1024);
         }
