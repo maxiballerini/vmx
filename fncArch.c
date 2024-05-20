@@ -45,8 +45,8 @@ void inicializaTablaSegmentos(maquinaVirtual *MV,uint16_t codeS,uint16_t dataS,u
         MV->segmento[pos] =  aux  << 16;
         MV->segmento[pos] += stackS;
         aux+=stackS;
-        MV->registro[SP]=(MV->segmento[pos] >> 16) +stackS;
-
+        MV->registro[SP]=aux;
+        printf("%d",aux);
         pos++;
     }
 
@@ -137,10 +137,10 @@ void leeARG(int argc,char *argv[],int *tamanoMemoria,int *mostrarAssembler,char 
 }
 void leeARGforDebugger(int argc,char *argv[],int *tamanoMemoria,int *mostrarAssembler,char **nombreArchivoVMX,char **nombreArchivoVMI){
         *mostrarAssembler = 1;
-        *nombreArchivoVMX = malloc(strlen("pruebaPila.vmx") + 1);
+        *nombreArchivoVMX = malloc(strlen("pruebaSP.vmx") + 1);
         *nombreArchivoVMI = malloc(strlen("sample1.vmi") + 1);
         strcpy(*nombreArchivoVMI,"sample1.vmi");
-        strcpy(*nombreArchivoVMX,"pruebaPila.vmx");
+        strcpy(*nombreArchivoVMX,"pruebaSP.vmx");
 }
 int leeArch(maquinaVirtual *MV,int argc,char *argv[],int *mostrarAssembler,char **VMI){
     FILE *arch;

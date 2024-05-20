@@ -120,15 +120,14 @@ int obtieneOP(maquinaVirtual *MV,int OP,int tipoOP){
 }
 void escribePila(maquinaVirtual *MV,int dato){
     int bottom,indice;
+    MV->registro[SP]-=4;
     indice = (MV->registro[SS]>>16) & 0x0000FFFF;
     bottom = (MV->segmento[indice]>>16) & 0x0000FFFF;
     if( MV->registro[SP]- 4 < bottom){
         printf("STACK OVERFLOW\n");
         exit(0);
     }
-    for(int i=0;i<4;i++){
-        MV->memoria[--MV->registro[SP]]=dato>>8*i;
-    }
+    escribememoria(MV,4,,dato);
 }
 int leePila(maquinaVirtual *MV){
     int tope,indice,dato;
