@@ -10,7 +10,7 @@ void ejecutadisasssembler(maquinaVirtual MV){
     char *funciones1OP[14] = {"SYS","JMP","JZ","JP","JN","JNZ","JNP","JNN","LDL","LDH","NOT","PUSH","POP","CALL"};
     char *funciones0OP[2] = {"STOP","RET"};
     char tipo[5]={'l',' ','w','b'};
-    char *Reg[16]={"CS","DS"," "," "," ","IP"," "," ","CC","AC","EAX","EBX","ECX","EDX","EEX","EFX"};
+    char *Reg[16]={"CS","DS","ES","SS","KS","IP","SP","BP","CC","AC","EAX","EBX","ECX","EDX","EEX","EFX"};
     char *RegHigh[16]={"CS","DS"," "," "," ","IP"," "," ","CC","AC","AH","BH","CH","DH","EH","FH"};
     char *RegLow[16]={"CS","DS"," "," "," ","IP"," "," ","CC","AC","AL","BL","CL","DL","EL","FL"};
     char *RegX[16]={"CS","DS"," "," "," ","IP"," "," ","CC","AC","AX","BX","CX","DX","EX","FX"};

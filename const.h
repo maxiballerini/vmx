@@ -16,7 +16,7 @@
 #define EEX 14
 #define EFX 15
 #define CANT_FUNCIONES2 13
-#define CANT_FUNCIONES1 11
+#define CANT_FUNCIONES1 14
 #define X 3
 #define EX 0
 #define HIGH 2

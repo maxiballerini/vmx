@@ -19,7 +19,7 @@ void ejecutaInstrucciones(maquinaVirtual *MV,char *VMI){
     top=bottom+(MV->segmento[MV->registro[CS]>>16]&0x0000FFFF)-1;
     do{
         auxIP = (MV->segmento[((MV->registro[IP]>>16)& 0x0000FFFF )]>>16) + (MV->registro[IP]&0x0000FFFF);
-        printf("%d\n",auxIP);
+        printf("[%04X]\n",auxIP);
         aux=MV->memoria[auxIP];
         MV->registro[IP]++;
         opB=0;

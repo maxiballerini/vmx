@@ -283,21 +283,21 @@ void read(maquinaVirtual *MV){
     switch (formato) {
         case 4:
             for(i=0;i<CL;i++){
-                printf("Introduce un carácter en formato octal: \n");
+                printf("Introduce un caracter en formato octal: \n");
                 scanf("%o", &aux);
                 escribememoria(MV,CH,posicion+CH*i,aux);
             }
             break;
         case 8:
             for(i=0;i<CL;i++){
-                printf("Introduce un carácter en formato hexadecimla: \n");
+                printf("Introduce un caracter en formato hexadecimla: \n");
                 scanf("%x", &aux);
                 escribememoria(MV,CH,posicion+CH*i,aux);
             }
             break;
         case 1:
             for(i=0;i<CL;i++){
-                printf("Introduce un carácter en formato decimal: \n");
+                printf("Introduce un caracter en formato decimal: \n");
                 scanf("%d", &aux);
                 escribememoria(MV,CH,posicion+CH*i,aux);
             }

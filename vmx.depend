@@ -89,9 +89,9 @@
 
 1715962638 c:\users\maxib\onedrive\documentos\github\vmx\componentes.h
 
-1715962638 c:\users\maxib\onedrive\documentos\github\vmx\const.h
+1716186341 c:\users\maxib\onedrive\documentos\github\vmx\const.h
 
-1716076576 source:c:\users\maxib\onedrive\documentos\github\vmx\ejecucion.c
+1716186521 source:c:\users\maxib\onedrive\documentos\github\vmx\ejecucion.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
@@ -102,7 +102,7 @@
 
 1715962638 c:\users\maxib\onedrive\documentos\github\vmx\instrucciones.h
 
-1716076926 source:c:\users\maxib\onedrive\documentos\github\vmx\fncarch.c
+1716186190 source:c:\users\maxib\onedrive\documentos\github\vmx\fncarch.c
 	"componentes.h"
 	<stdint.h>
 	<stdio.h>
@@ -116,7 +116,7 @@
 	"stdlib.h"
 	"stdio.h"
 
-1716077138 source:c:\users\maxib\onedrive\documentos\github\vmx\instrucciones.c
+1716186557 source:c:\users\maxib\onedrive\documentos\github\vmx\instrucciones.c
 	<string.h>
 	<stdlib.h>
 	<stdio.h>
@@ -124,7 +124,7 @@
 	"funciones.h"
 	"ejecucion.h"
 
-1715962638 c:\users\maxib\onedrive\documentos\github\vmx\funciones.h
+1716186474 c:\users\maxib\onedrive\documentos\github\vmx\funciones.h
 	"componentes.h"
 	"const.h"
 
