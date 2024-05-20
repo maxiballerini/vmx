@@ -333,10 +333,10 @@ void write(maquinaVirtual *MV){
             aux=aux<<(24-(CH-1)*8);
             for(int j=0;j<CH;j++){
                 aux1 =aux >>(24-8*j);
-                if(aux1==127 ||(aux>=0 &&aux1<=31))
-                    printf(".");
-                else
+                if(aux>=33 &&aux1<=126)
                     printf("%c",aux1);
+                else
+                    printf(".");
             }
             printf(" ");
         }

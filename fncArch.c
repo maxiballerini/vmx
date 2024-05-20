@@ -4,9 +4,6 @@
 #include <stdlib.h>
 #include "string.h"
 #include "const.h"
-void inicializatablasegmentos1(maquinaVirtual *MV){
-
-}
 void inicializaTablaSegmentos(maquinaVirtual *MV,uint16_t codeS,uint16_t dataS,uint16_t extraS,uint16_t stackS,uint16_t constS,int tamanoMemoria){
     int aux=0,pos=0;
     MV->registro[KS] = -1;
@@ -140,10 +137,10 @@ void leeARG(int argc,char *argv[],int *tamanoMemoria,int *mostrarAssembler,char 
 }
 void leeARGforDebugger(int argc,char *argv[],int *tamanoMemoria,int *mostrarAssembler,char **nombreArchivoVMX,char **nombreArchivoVMI){
         *mostrarAssembler = 1;
-        *nombreArchivoVMX = malloc(strlen("sample1aux.vmx") + 1);
+        *nombreArchivoVMX = malloc(strlen("sample (9).vmx") + 1);
         *nombreArchivoVMI = malloc(strlen("sample1.vmi") + 1);
         strcpy(*nombreArchivoVMI,"sample1.vmi");
-        strcpy(*nombreArchivoVMX,"sample1aux.vmx");
+        strcpy(*nombreArchivoVMX,"sample (9).vmx");
 }
 int leeArch(maquinaVirtual *MV,int argc,char *argv[],int *mostrarAssembler,char **VMI){
     FILE *arch;

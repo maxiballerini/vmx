@@ -16,9 +16,10 @@ void ejecutaInstrucciones(maquinaVirtual *MV,char *VMI){
     FuncPtr1 funciones1OP[14] = {JMP,JMP,JZ,JP,JN,JNZ,JNP,JNN,LDL,LDH,NOT,PUSH,POP,CALL};
     FuncPtr0 funciones0OP[2] = {STOP,RET};
     bottom=(MV->segmento[MV->registro[CS]>>16]>>16)&0x0000FFFF;
-    top=bottom+(MV->segmento[MV->registro[CS]>>16]&0x0000FFFF);
+    top=bottom+(MV->segmento[MV->registro[CS]>>16]&0x0000FFFF)-1;
     do{
         auxIP = (MV->segmento[((MV->registro[IP]>>16)& 0x0000FFFF )]>>16) + (MV->registro[IP]&0x0000FFFF);
+        printf("%d\n",auxIP);
         aux=MV->memoria[auxIP];
         MV->registro[IP]++;
         opB=0;
@@ -66,6 +67,7 @@ void ejecutaInstrucciones(maquinaVirtual *MV,char *VMI){
                 }
             }
         }
+        auxIP = (MV->segmento[((MV->registro[IP]>>16)& 0x0000FFFF )]>>16) + (MV->registro[IP]&0x0000FFFF);
     }
     while(auxIP>=bottom && auxIP<top);
 }
