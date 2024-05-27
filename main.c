@@ -4,6 +4,7 @@
 #include "componentes.h"
 #include "ejecucion.h"
 #include "fncArch.h"
+#include "const.h"
 int main(int argc,char *argv[]){
     maquinaVirtual MV;
     int  mostrarAssembler = 0;

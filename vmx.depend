@@ -81,17 +81,17 @@
 	"componentes.h"
 	"const.h"
 
-1715980201 source:c:\users\maxib\onedrive\documentos\github\vmx\disassembler.c
+1716729545 source:c:\users\maxib\onedrive\documentos\github\vmx\disassembler.c
 	"componentes.h"
 	<stdio.h>
 	<stdlib.h>
 	"const.h"
 
-1715962638 c:\users\maxib\onedrive\documentos\github\vmx\componentes.h
+1716733347 c:\users\maxib\onedrive\documentos\github\vmx\componentes.h
 
 1716186341 c:\users\maxib\onedrive\documentos\github\vmx\const.h
 
-1716186521 source:c:\users\maxib\onedrive\documentos\github\vmx\ejecucion.c
+1716729533 source:c:\users\maxib\onedrive\documentos\github\vmx\ejecucion.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
@@ -102,7 +102,7 @@
 
 1715962638 c:\users\maxib\onedrive\documentos\github\vmx\instrucciones.h
 
-1716186190 source:c:\users\maxib\onedrive\documentos\github\vmx\fncarch.c
+1716730337 source:c:\users\maxib\onedrive\documentos\github\vmx\fncarch.c
 	"componentes.h"
 	<stdint.h>
 	<stdio.h>
@@ -110,13 +110,13 @@
 	"string.h"
 	"const.h"
 
-1715994078 source:c:\users\maxib\onedrive\documentos\github\vmx\funciones.c
+1716733381 source:c:\users\maxib\onedrive\documentos\github\vmx\funciones.c
 	"componentes.h"
 	"const.h"
 	"stdlib.h"
 	"stdio.h"
 
-1716186557 source:c:\users\maxib\onedrive\documentos\github\vmx\instrucciones.c
+1716732911 source:c:\users\maxib\onedrive\documentos\github\vmx\instrucciones.c
 	<string.h>
 	<stdlib.h>
 	<stdio.h>
@@ -124,20 +124,21 @@
 	"funciones.h"
 	"ejecucion.h"
 
-1716186474 c:\users\maxib\onedrive\documentos\github\vmx\funciones.h
+1716189360 c:\users\maxib\onedrive\documentos\github\vmx\funciones.h
 	"componentes.h"
 	"const.h"
 
 1715962638 c:\users\maxib\onedrive\documentos\github\vmx\ejecucion.h
 	"componentes.h"
 
-1715994232 source:c:\users\maxib\onedrive\documentos\github\vmx\main.c
+1716726747 source:c:\users\maxib\onedrive\documentos\github\vmx\main.c
 	<stdio.h>
 	<stdlib.h>
 	"disassembler.h"
 	"componentes.h"
 	"ejecucion.h"
 	"fncArch.h"
+	"const.h"
 
 1715962638 c:\users\maxib\onedrive\documentos\github\vmx\disassembler.h
 	"componentes.h"

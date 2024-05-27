@@ -11,7 +11,7 @@ void ejecutaInstrucciones(maquinaVirtual *MV,char *VMI){
     char aux;
     int i, opA,opB,top,bottom,auxIP;
     char operandoA,operandoB;
-    char mascara0Operando= 0xFF,mascara2Operando= 0x10;
+    char mascara0Operando= 0xF0,mascara2Operando= 0x10;
     FuncPtr2 funciones2OP[13] = {MOV,ADD,SUB,SWAP,MUL,DIV,CMP,SHL,SHR,AND,OR,XOR,RND};
     FuncPtr1 funciones1OP[14] = {JMP,JMP,JZ,JP,JN,JNZ,JNP,JNN,LDL,LDH,NOT,PUSH,POP,CALL};
     FuncPtr0 funciones0OP[2] = {STOP,RET};

@@ -8,7 +8,7 @@
 void MOV(maquinaVirtual*MV,int opA,int opB,char tipoA,char tipoB){
     int datoB = obtieneOP(MV,opB,tipoB);
     if(tipoA==3){
-        escribememoria(MV,cantMemoria(opA),obtienePunteroMemoria(MV,opA),datoB);
+        escribememoria(MV,cantMemoria(opA),obtienePunteroMemoria(MV,opA),datoB,obtieneSec(opA));
     }
     else
         escriberegistro(MV,opA,datoB);
@@ -25,7 +25,7 @@ void ADD(maquinaVirtual *MV, int opA, int opB, char tipoA, char tipoB) {
     else
         MV->registro[CC]=0;
     if(tipoA==3)
-        escribememoria(MV,cantMemoria(opA),obtienePunteroMemoria(MV,opA),datoA);
+        escribememoria(MV,cantMemoria(opA),obtienePunteroMemoria(MV,opA),datoA,obtieneSec(opA));
     else
         escriberegistro(MV,opA,datoA);
 
@@ -43,7 +43,7 @@ void SUB(maquinaVirtual *MV, int opA, int opB, char tipoA, char tipoB) {
     else
         MV->registro[CC]=0;
     if(tipoA==3)
-        escribememoria(MV,cantMemoria(opA),obtienePunteroMemoria(MV,opA),datoA);
+        escribememoria(MV,cantMemoria(opA),obtienePunteroMemoria(MV,opA),datoA,obtieneSec(opA));
     else
         escriberegistro(MV,opA,datoA);
 }
@@ -52,8 +52,8 @@ void SWAP(maquinaVirtual *MV, int opA, int opB, char tipoA, char tipoB) {
     int datoB = obtieneOP(MV,opB,tipoB);
     int datoA = obtieneOP(MV,opA,tipoA);
     if(tipoA==3){
-        escribememoria(MV,cantMemoria(opB),obtienePunteroMemoria(MV,opA),datoB);
-        escribememoria(MV,cantMemoria(opA),obtienePunteroMemoria(MV,opB),datoA);
+        escribememoria(MV,cantMemoria(opB),obtienePunteroMemoria(MV,opA),datoB,obtieneSec(opA));
+        escribememoria(MV,cantMemoria(opA),obtienePunteroMemoria(MV,opB),datoA,obtieneSec(opA));
     }
     else{
         escriberegistro(MV,opA,datoB);
@@ -73,7 +73,7 @@ void MUL(maquinaVirtual *MV, int opA, int opB, char tipoA, char tipoB) {
     else
         MV->registro[CC]=0;
     if(tipoA==3)
-        escribememoria(MV,cantMemoria(opA),obtienePunteroMemoria(MV,opA),datoA);
+        escribememoria(MV,cantMemoria(opA),obtienePunteroMemoria(MV,opA),datoA,obtieneSec(opA));
     else
         escriberegistro(MV,opA,datoA);
 }
@@ -99,7 +99,7 @@ void DIV(maquinaVirtual *MV, int opA, int opB, char tipoA, char tipoB) {
         MV->registro[CC]=0;
 
     if(tipoA==3)
-        escribememoria(MV,cantMemoria(opA),obtienePunteroMemoria(MV,opA),datoA);
+        escribememoria(MV,cantMemoria(opA),obtienePunteroMemoria(MV,opA),datoA,obtieneSec(opA));
     else
         escriberegistro(MV,opA,datoA);
 }
@@ -122,7 +122,7 @@ void SHL(maquinaVirtual *MV, int opA, int opB, char tipoA, char tipoB) {
     int datoA = obtieneOP(MV,opA,tipoA);
     datoA=datoA<<datoB;
     if(tipoA==3)
-        escribememoria(MV,cantMemoria(opA),obtienePunteroMemoria(MV,opA),datoA);
+        escribememoria(MV,cantMemoria(opA),obtienePunteroMemoria(MV,opA),datoA,obtieneSec(opA));
     else{
         secReg=(opA & 0x000000F0)>>4;
         if((secReg == LOW) || (secReg = HIGH)){
@@ -145,7 +145,7 @@ void SHR(maquinaVirtual *MV, int opA, int opB, char tipoA, char tipoB) {
         }
     }
     if(tipoA==3)
-        escribememoria(MV,cantMemoria(opA),obtienePunteroMemoria(MV,opA),datoA);
+        escribememoria(MV,cantMemoria(opA),obtienePunteroMemoria(MV,opA),datoA,obtieneSec(opA));
     else{
         secReg=(opA & 0x000000F0)>>4;
         if((secReg == LOW) || (secReg = HIGH)){
@@ -170,7 +170,7 @@ void AND(maquinaVirtual *MV, int opA, int opB, char tipoA, char tipoB) {
     else
         MV->registro[CC]=0;
     if(tipoA==3)
-        escribememoria(MV,cantMemoria(opA),obtienePunteroMemoria(MV,opA),datoA);
+        escribememoria(MV,cantMemoria(opA),obtienePunteroMemoria(MV,opA),datoA,obtieneSec(opA));
     else
         escriberegistro(MV,opA,datoA);
 }
@@ -187,7 +187,7 @@ void OR(maquinaVirtual *MV, int opA, int opB, char tipoA, char tipoB) {
     else
         MV->registro[CC]=0;
     if(tipoA==3)
-        escribememoria(MV,cantMemoria(opA),obtienePunteroMemoria(MV,opA),datoA);
+        escribememoria(MV,cantMemoria(opA),obtienePunteroMemoria(MV,opA),datoA,obtieneSec(opA));
     else
         escriberegistro(MV,opA,datoA);
 }
@@ -204,7 +204,7 @@ void XOR(maquinaVirtual *MV, int opA, int opB, char tipoA, char tipoB) {
     else
         MV->registro[CC]=0;
     if(tipoA==3)
-        escribememoria(MV,cantMemoria(opA),obtienePunteroMemoria(MV,opA),datoA);
+        escribememoria(MV,cantMemoria(opA),obtienePunteroMemoria(MV,opA),datoA,obtieneSec(opA));
     else
         escriberegistro(MV,opA,datoA);
 }
@@ -215,7 +215,7 @@ void RND(maquinaVirtual *MV, int opA, int opB, char tipoA, char tipoB) {
     datoB = rand() % (datoB+1);
 
     if(tipoA==3)
-        escribememoria(MV,cantMemoria(opA),obtienePunteroMemoria(MV,opA),datoB);
+        escribememoria(MV,cantMemoria(opA),obtienePunteroMemoria(MV,opA),datoB,obtieneSec(opA));
     else
         escriberegistro(MV,opA,datoB);
 }
@@ -285,28 +285,28 @@ void read(maquinaVirtual *MV){
             for(i=0;i<CL;i++){
                 printf("Introduce un caracter en formato octal: \n");
                 scanf("%o", &aux);
-                escribememoria(MV,CH,posicion+CH*i,aux);
+                escribememoria(MV,CH,posicion+CH*i,aux,DS);
             }
             break;
         case 8:
             for(i=0;i<CL;i++){
                 printf("Introduce un caracter en formato hexadecimla: \n");
                 scanf("%x", &aux);
-                escribememoria(MV,CH,posicion+CH*i,aux);
+                escribememoria(MV,CH,posicion+CH*i,aux,DS);
             }
             break;
         case 1:
             for(i=0;i<CL;i++){
                 printf("Introduce un caracter en formato decimal: \n");
                 scanf("%d", &aux);
-                escribememoria(MV,CH,posicion+CH*i,aux);
+                escribememoria(MV,CH,posicion+CH*i,aux,DS);
             }
             break;
         case 2:
             for(i=0;i<CL;i++){
                 printf("Introduce un carácter: ");
                 scanf("%c", &c);
-                escribememoria(MV,CH,posicion+CH*i,aux);
+                escribememoria(MV,CH,posicion+CH*i,aux,DS);
             }
             break;
     }
@@ -319,7 +319,7 @@ void write(maquinaVirtual *MV){
     int aux,aux1;
     int posicion =obtienePunteroMemoria(MV,MV->registro[13]);
     for(i=0;i<CL;i++){
-        aux = leememoria(MV,CH,posicion+(CH*i));
+        aux = leememoria(MV,CH,posicion+(CH*i),DS);
         printf("[%04X] ",posicion+(CH*i));
 
         if((formato & 0x00000008 )!=0 )
@@ -413,7 +413,7 @@ void NOT (maquinaVirtual *MV,int opA,int tipoA){
         MV->registro[CC]=0;
 
     if(tipoA==3)
-        escribememoria(MV,cantMemoria(opA),obtienePunteroMemoria(MV,opA),datoA);
+        escribememoria(MV,cantMemoria(opA),obtienePunteroMemoria(MV,opA),datoA,obtieneSec(opA));
     else{
         secReg=(opA & 0x000000F0)>>4;
         if((secReg == LOW) || (secReg = HIGH)){
@@ -434,7 +434,7 @@ void POP (maquinaVirtual *MV,int opA,int tipoA){
     int dato;
     dato = leePila(MV);
      if(tipoA==3){
-        escribememoria(MV,cantMemoria(opA),obtienePunteroMemoria(MV,opA),dato);
+        escribememoria(MV,cantMemoria(opA),obtienePunteroMemoria(MV,opA),dato,obtieneSec(opA));
     }
     else
         escriberegistro(MV,opA,dato);

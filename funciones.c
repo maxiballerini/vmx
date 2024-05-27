@@ -13,15 +13,19 @@ int extiendenegativo(int i,int cant){
 int cantMemoria(int opA){
     return (~((opA)>>22) & 0x00000003)+1;
 }
+int obtieneSec(int op){
+    return (op>>16)&0x00000F;
+}
 void AnalizaSegmento(maquinaVirtual *MV,int posicion,int cant,int seg){
     int top,bottom,indice;
-     indice =(MV->registro[seg]>>16) & 0x0000FFFF;
+    if(seg == BP)
+        seg=SS;
+    indice =(MV->registro[seg]>>16) & 0x0000FFFF;
     bottom=(MV->segmento[indice]>>16) & 0x0000FFFF;
     top = bottom + (MV->segmento[indice] & 0x0000FFFF);
 
-
-    if(posicion < bottom || (posicion + cant) >= top){
-        printf("segmentation fall en %08X\n",MV->registro[IP] );
+    if(posicion < bottom || (posicion + cant) > top){
+        printf("segmentation fall en [%04X]\n",((MV->segmento[((MV->registro[IP]>>16)& 0x0000FFFF )]>>16) + (MV->registro[IP]&0x0000FFFF)));
         exit(0);
     }
 }
@@ -37,23 +41,29 @@ int obtienePunteroMemoria(maquinaVirtual *MV,int op){
     sec = MV->registro[reg]>>16;
     indice = (MV->segmento[sec]>>16)&0x0000FFFF;
     offset1=op & 0x0000FFFF;
+    if((offset1&0x00008000)==0x00008000){
+        offset1 = offset1 | 0xFFFF0000;
+    }
     offset2=MV->registro[reg]&0x0000FFFF;
-
+    if((offset2&0x00008000) == 0x00008000){
+        offset2 = offset2 | 0xFFFF0000;
+    }
     return indice + offset1 + offset2;
 }
 
-int leememoria(maquinaVirtual *MV,int cant,int posicion){
+int leememoria(maquinaVirtual *MV,int cant,int posicion,int sec){
     int aux=0;
-    AnalizaSegmento(MV,posicion,cant,DS);
+    //AnalizaSegmento(MV,posicion,cant,sec);
     for(int i=0;i<cant;i++){
         aux = aux<<8;
         aux |= MV->memoria[posicion+i] & 0x000000FF;
     }
     return aux;
 }
-void escribememoria(maquinaVirtual *MV,int cant,int posicion,int dato){
+void escribememoria(maquinaVirtual *MV,int cant,int posicion,int dato,int sec){
     int aux;
-    AnalizaSegmento(MV,posicion,cant,DS);
+    AnalizaSegmento(MV,posicion,cant,sec);
+    MV->registro[16]=dato;
     for(int i=0;i<cant;i++){
         aux = (dato >>(8*(cant-1) - i*8)) & 0x000000FF;
         MV->memoria[posicion++]=aux;
@@ -104,7 +114,7 @@ void escriberegistro(maquinaVirtual *MV,int Reg,int dato){
 int obtieneOP(maquinaVirtual *MV,int OP,int tipoOP){
     int secReg,codReg;
     if(tipoOP==3){
-        return leememoria(MV,cantMemoria(OP),obtienePunteroMemoria(MV,OP));
+        return leememoria(MV,cantMemoria(OP),obtienePunteroMemoria(MV,OP),obtieneSec(OP));
     }
     else if(tipoOP==1){
         secReg=(OP&0x000000F0)>>4;
@@ -123,23 +133,21 @@ void escribePila(maquinaVirtual *MV,int dato){
     MV->registro[SP]-=4;
     indice = (MV->registro[SS]>>16) & 0x0000FFFF;
     bottom = (MV->segmento[indice]>>16) & 0x0000FFFF;
-    if( MV->registro[SP]- 4 < bottom){
+    if( MV->registro[SP] < bottom){
         printf("STACK OVERFLOW\n");
         exit(0);
     }
-    escribememoria(MV,4,,dato);
+    escribememoria(MV,4,MV->registro[SP],dato,SS);
 }
 int leePila(maquinaVirtual *MV){
     int tope,indice,dato;
     indice = (MV->registro[SS]>>16) & 0x0000FFFF;
     tope = ((MV->segmento[indice]>>16) & 0x0000FFFF)+(MV->segmento[indice] & 0x0000FFFF);
-    if( MV->registro[SP]+ 4 >= tope){
-        printf("STACK UNDEROVERFLOW\n");
+    if( MV->registro[SP] + 4 > tope){
+        printf("STACK UNDERFLOW\n");
         exit(0);
     }
-    for(int i=0;i<4;i++){
-        dato=MV->memoria[MV->registro[SP]++];
-        dato=dato<<8;
-    }
+    dato = leememoria(MV,4,obtienePunteroMemoria(MV,SP<<16),SS);
+    MV->registro[SP]+=4;
     return dato;
 }

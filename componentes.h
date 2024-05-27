@@ -3,7 +3,7 @@
 
 typedef struct {
     char memoria[65535];
-    int registro[16];
+    int registro[18];
     int segmento[8];
 } maquinaVirtual;
 

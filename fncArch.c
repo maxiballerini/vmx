@@ -16,6 +16,7 @@ void inicializaTablaSegmentos(maquinaVirtual *MV,uint16_t codeS,uint16_t dataS,u
         MV->segmento[pos] = aux << 16;
         MV->segmento[pos] += constS;
         aux+=constS;
+        printf("%d \n",aux);
         pos++;
     }
     if(codeS>0){
@@ -23,6 +24,7 @@ void inicializaTablaSegmentos(maquinaVirtual *MV,uint16_t codeS,uint16_t dataS,u
         MV->segmento[pos] =  aux  << 16;
         MV->segmento[pos] += codeS;
         aux+=codeS;
+        printf("%d \n",aux);
         MV->registro[IP]=pos<<16;
         pos++;
     }
@@ -31,6 +33,7 @@ void inicializaTablaSegmentos(maquinaVirtual *MV,uint16_t codeS,uint16_t dataS,u
         MV->segmento[pos] =  aux  << 16;
         MV->segmento[pos] += dataS;
         aux+=dataS;
+        printf("%d \n",aux);
         pos++;
     }
     if(extraS>0){
@@ -38,6 +41,7 @@ void inicializaTablaSegmentos(maquinaVirtual *MV,uint16_t codeS,uint16_t dataS,u
         MV->segmento[pos] =  aux  << 16;
         MV->segmento[pos] += extraS;
         aux+=extraS;
+        printf("%d \n",aux);
         pos++;
     }
     if(stackS>0){
@@ -45,8 +49,8 @@ void inicializaTablaSegmentos(maquinaVirtual *MV,uint16_t codeS,uint16_t dataS,u
         MV->segmento[pos] =  aux  << 16;
         MV->segmento[pos] += stackS;
         aux+=stackS;
+        printf("%d \n",aux);
         MV->registro[SP]=aux;
-        printf("%d",aux);
         pos++;
     }
 
@@ -137,10 +141,10 @@ void leeARG(int argc,char *argv[],int *tamanoMemoria,int *mostrarAssembler,char 
 }
 void leeARGforDebugger(int argc,char *argv[],int *tamanoMemoria,int *mostrarAssembler,char **nombreArchivoVMX,char **nombreArchivoVMI){
         *mostrarAssembler = 1;
-        *nombreArchivoVMX = malloc(strlen("pruebaSP.vmx") + 1);
+        *nombreArchivoVMX = malloc(strlen("sample.vmx") + 1);
         *nombreArchivoVMI = malloc(strlen("sample1.vmi") + 1);
         strcpy(*nombreArchivoVMI,"sample1.vmi");
-        strcpy(*nombreArchivoVMX,"pruebaSP.vmx");
+        strcpy(*nombreArchivoVMX,"sample.vmx");
 }
 int leeArch(maquinaVirtual *MV,int argc,char *argv[],int *mostrarAssembler,char **VMI){
     FILE *arch;

@@ -14,7 +14,7 @@ void ejecutadisasssembler(maquinaVirtual MV){
     char *RegHigh[16]={"CS","DS"," "," "," ","IP"," "," ","CC","AC","AH","BH","CH","DH","EH","FH"};
     char *RegLow[16]={"CS","DS"," "," "," ","IP"," "," ","CC","AC","AL","BL","CL","DL","EL","FL"};
     char *RegX[16]={"CS","DS"," "," "," ","IP"," "," ","CC","AC","AX","BX","CX","DX","EX","FX"};
-    char mascara0Operando= 0xFF,mascara2Operando= 0x10;
+    char mascara0Operando= 0xF0,mascara2Operando= 0x10;
     flag = ( MV.segmento[((MV.registro[CS] >>16)&0x0000FFFF)] & 0x0000FFFF );
     entrypoint=((MV.segmento[MV.registro[IP]>>16])>>16 )+ (MV.registro[IP] & 0x0000FFFF);
     if(MV.registro[KS]!=-1){
