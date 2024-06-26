@@ -16,6 +16,7 @@ int cantMemoria(int opA){
 int obtieneSec(int op){
     return (op>>16)&0x00000F;
 }
+
 void AnalizaSegmento(maquinaVirtual *MV,int posicion,int cant,int seg){
     int top,bottom,indice;
     if(seg == BP)
@@ -50,6 +51,14 @@ int obtienePunteroMemoria(maquinaVirtual *MV,int op){
     }
     return indice + offset1 + offset2;
 }
+int obtienePunteroPila(maquinaVirtual *MV,int aux){
+    int aux2,aux3;
+    aux2=MV->segmento[aux>>16];
+    aux3=aux&0x0000FFFF;
+    aux2=aux2>>16;
+    aux3=(aux3&0x0000FFFF)+ aux2;
+    return aux3;
+}
 
 int leememoria(maquinaVirtual *MV,int cant,int posicion,int sec){
     int aux=0;
@@ -58,12 +67,17 @@ int leememoria(maquinaVirtual *MV,int cant,int posicion,int sec){
         aux = aux<<8;
         aux |= MV->memoria[posicion+i] & 0x000000FF;
     }
+    if(cant==2 && (aux&0x00008000)==0x00008000){
+        aux = extiendenegativo(aux,2);
+    }
+    if(cant==1 && (aux&0x00000080)==0x00000080){
+        aux = extiendenegativo(aux,1);
+    }
     return aux;
 }
 void escribememoria(maquinaVirtual *MV,int cant,int posicion,int dato,int sec){
     int aux;
     AnalizaSegmento(MV,posicion,cant,sec);
-    MV->registro[16]=dato;
     for(int i=0;i<cant;i++){
         aux = (dato >>(8*(cant-1) - i*8)) & 0x000000FF;
         MV->memoria[posicion++]=aux;
@@ -133,21 +147,23 @@ void escribePila(maquinaVirtual *MV,int dato){
     MV->registro[SP]-=4;
     indice = (MV->registro[SS]>>16) & 0x0000FFFF;
     bottom = (MV->segmento[indice]>>16) & 0x0000FFFF;
-    if( MV->registro[SP] < bottom){
+    int aux = obtienePunteroPila(MV,MV->registro[SP]);
+    if( aux < bottom){
         printf("STACK OVERFLOW\n");
         exit(0);
     }
-    escribememoria(MV,4,MV->registro[SP],dato,SS);
+    escribememoria(MV,4,aux,dato,SS);
 }
 int leePila(maquinaVirtual *MV){
     int tope,indice,dato;
     indice = (MV->registro[SS]>>16) & 0x0000FFFF;
     tope = ((MV->segmento[indice]>>16) & 0x0000FFFF)+(MV->segmento[indice] & 0x0000FFFF);
-    if( MV->registro[SP] + 4 > tope){
+    int aux = obtienePunteroPila(MV,MV->registro[SP]);
+    if( aux + 4 > tope){
         printf("STACK UNDERFLOW\n");
         exit(0);
     }
-    dato = leememoria(MV,4,obtienePunteroMemoria(MV,SP<<16),SS);
+    dato = leememoria(MV,4,aux,SS);
     MV->registro[SP]+=4;
     return dato;
 }

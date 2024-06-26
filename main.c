@@ -19,6 +19,5 @@ int main(int argc,char *argv[]){
     }
     else
         printf("el archivo no se pudo abrir");
-    printf("%d",MV.registro[EBX]);
     return 0;
 }

@@ -69,5 +69,5 @@ void ejecutaInstrucciones(maquinaVirtual *MV,char *VMI){
         }
         auxIP = (MV->segmento[((MV->registro[IP]>>16)& 0x0000FFFF )]>>16) + (MV->registro[IP]&0x0000FFFF);
     }
-    while(auxIP>=bottom && auxIP<top);
+    while(auxIP>=bottom && auxIP<=top);
 }

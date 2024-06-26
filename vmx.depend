@@ -18,34 +18,35 @@
 1715306692 d:\vmx\vmx\fncarch.h
 	"componentes.h"
 
-1715697205 source:d:\vmx\main.c
+1719375037 source:d:\vmx\main.c
 	<stdio.h>
 	<stdlib.h>
 	"disassembler.h"
 	"componentes.h"
 	"ejecucion.h"
 	"fncArch.h"
+	"const.h"
 
-1715421475 d:\vmx\disassembler.h
+1716937181 d:\vmx\disassembler.h
 	"componentes.h"
 
-1715697205 d:\vmx\componentes.h
+1716937181 d:\vmx\componentes.h
 
-1715697205 d:\vmx\ejecucion.h
+1716937181 d:\vmx\ejecucion.h
 	"componentes.h"
 
-1715697205 d:\vmx\fncarch.h
+1716937181 d:\vmx\fncarch.h
 	"componentes.h"
 
-1715468286 source:d:\vmx\disassembler.c
+1719361115 source:d:\vmx\disassembler.c
 	"componentes.h"
 	<stdio.h>
 	<stdlib.h>
 	"const.h"
 
-1715421475 d:\vmx\const.h
+1716937181 d:\vmx\const.h
 
-1715697205 source:d:\vmx\ejecucion.c
+1719412169 source:d:\vmx\ejecucion.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
@@ -54,9 +55,9 @@
 	"instrucciones.h"
 	"const.h"
 
-1715697205 d:\vmx\instrucciones.h
+1716937181 d:\vmx\instrucciones.h
 
-1715697205 source:d:\vmx\fncarch.c
+1719425527 source:d:\vmx\fncarch.c
 	"componentes.h"
 	<stdint.h>
 	<stdio.h>
@@ -64,20 +65,21 @@
 	"string.h"
 	"const.h"
 
-1715646699 source:d:\vmx\funciones.c
+1719374401 source:d:\vmx\funciones.c
 	"componentes.h"
 	"const.h"
 	"stdlib.h"
 	"stdio.h"
 
-1715646688 source:d:\vmx\instrucciones.c
+1719412077 source:d:\vmx\instrucciones.c
 	<string.h>
 	<stdlib.h>
 	<stdio.h>
 	<time.h>
 	"funciones.h"
+	"ejecucion.h"
 
-1715644668 d:\vmx\funciones.h
+1716937181 d:\vmx\funciones.h
 	"componentes.h"
 	"const.h"
 

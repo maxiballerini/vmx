@@ -221,7 +221,6 @@ void RND(maquinaVirtual *MV, int opA, int opB, char tipoA, char tipoB) {
 }
 
 
-//CORREGIR READ Y WRITE
 void readS(maquinaVirtual *MV){
     int pos;
     char aux[50];
@@ -236,6 +235,7 @@ void writeS(maquinaVirtual *MV){
     while(MV->memoria[pos]!='\0'){
         printf("%c",MV->memoria[pos++]);
     }
+    printf("\n");
 }
 void clear(){
     system("cls");
@@ -248,7 +248,7 @@ void breakpoint(maquinaVirtual *MV,char *VMI){
             char caracter;
             printf("Presiona 'q' 'g' o enter \n");
             while (1) {
-                fwrite("VMI24188",1,8,arch);
+                fwrite("VMI24",1,5,arch);
                 fwrite(MV->registro,sizeof(MV->registro),1,arch);
                 fwrite(MV->segmento,sizeof(MV->segmento),1,arch);
                 fwrite(MV->memoria,sizeof(MV->memoria),1,arch);
@@ -284,6 +284,7 @@ void read(maquinaVirtual *MV){
         case 4:
             for(i=0;i<CL;i++){
                 printf("Introduce un caracter en formato octal: \n");
+                printf("[%04X] ",posicion);
                 scanf("%o", &aux);
                 escribememoria(MV,CH,posicion+CH*i,aux,DS);
             }
@@ -291,13 +292,15 @@ void read(maquinaVirtual *MV){
         case 8:
             for(i=0;i<CL;i++){
                 printf("Introduce un caracter en formato hexadecimla: \n");
+                printf("[%04X] ",posicion);
                 scanf("%x", &aux);
-                escribememoria(MV,CH,posicion+CH*i,aux,DS);
+                escribememoria(MV,CH,posicion+CH*i,aux,EDX);
             }
             break;
         case 1:
             for(i=0;i<CL;i++){
                 printf("Introduce un caracter en formato decimal: \n");
+                printf("[%04X] ",posicion);
                 scanf("%d", &aux);
                 escribememoria(MV,CH,posicion+CH*i,aux,DS);
             }
@@ -305,6 +308,7 @@ void read(maquinaVirtual *MV){
         case 2:
             for(i=0;i<CL;i++){
                 printf("Introduce un carácter: ");
+                printf("[%04X] ",posicion);
                 scanf("%c", &c);
                 escribememoria(MV,CH,posicion+CH*i,aux,DS);
             }
@@ -317,7 +321,7 @@ void write(maquinaVirtual *MV){
     int CH=(MV->registro[12]&0x0000FF00)>>8;
     int CL=MV->registro[12]&0x000000FF,i;
     int aux,aux1;
-    int posicion =obtienePunteroMemoria(MV,MV->registro[13]);
+    int posicion =obtienePunteroMemoria(MV,0x000D0000);
     for(i=0;i<CL;i++){
         aux = leememoria(MV,CH,posicion+(CH*i),DS);
         printf("[%04X] ",posicion+(CH*i));
